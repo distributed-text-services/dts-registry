@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://distributed-text-services.github.io/dts-registry/registry.schema.json",
+  "title": "DTS Registry",
+  "description": "JSON-LD schema for the DTS Registry, a DCAT Catalog of API instances that implement the Distributed Text Services (DTS) specification.",
+  "type": "object",
+  "required": ["@context", "@type", "entries"],
+  "properties": {
+    "@context": {
+      "description": "JSON-LD context. MUST include the DTS v1.0 context as the first entry, followed by the registry-specific inline context that introduces dcat: terms and locally-defined terms.",
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": ["string", "object"] }, "minItems": 1 },
+        { "type": "object" }
+      ]
+    },
+    "@id": { "type": "string", "format": "iri" },
+    "@type": {
+      "description": "Top-level type. MUST be \"Catalog\" (resolves to dcat:Catalog).",
+      "const": "Catalog"
+    },
+    "title": {
+      "type": "string",
+      "description": "Human-readable name of the registry (resolves to dts:title)."
+    },
+    "description": {
+      "type": "string",
+      "description": "Human-readable description of the registry (resolves to dts:description)."
+    },
+    "entries": {
+      "type": "array",
+      "description": "List of registered DTS API instances (resolves to dcat:service).",
+      "items": { "$ref": "#/$defs/Entry" }
+    }
+  },
+  "$defs": {
+    "Entry": {
+      "type": "object",
+      "description": "A single DTS API instance, modelled as a dcat:DataService whose @id is the URL of its DTS Entry Endpoint.",
+      "required": ["@id", "@type", "title", "dtsVersion", "status", "endpointURL"],
+      "properties": {
+        "@id": {
+          "type": "string",
+          "format": "iri",
+          "description": "Stable identifier for the API instance. By convention, the URL of its DTS Entry Endpoint."
+        },
+        "@type": {
+          "description": "MUST be \"DataService\" (resolves to dcat:DataService). The entry's @id is the URL of the DTS Entry Endpoint; dereferencing that URL yields a dts:EntryPoint document with its own @context, so the registry does not re-assert that type here.",
+          "const": "DataService"
+        },
+        "title": {
+          "type": "string",
+          "description": "Human-readable name of the API instance (resolves to dts:title)."
+        },
+        "description": {
+          "type": "string",
+          "description": "Free-text description of the API instance and its corpus (resolves to dts:description)."
+        },
+        "dtsVersion": {
+          "description": "Version of the DTS specification implemented by this instance (resolves to dts:dtsVersion). MUST be one of the published spec literals, \"1-draft\" for implementations the upstream Known Corpora list labels as a 1.0 draft, \"pre-alpha\" for implementations known to predate the draft series entirely, or \"unknown\" when the endpoint serves a valid response but does not advertise a dtsVersion field.",
+          "type": "string",
+          "enum": ["1.0", "1.0rc1", "1-alpha", "1-draft", "pre-alpha", "unknown"],
+          "$comment": "1.0       = the published v1.0 specification (https://dtsapi.org/versions/v1.0).\n1.0rc1    = the 1.0 release candidate (https://distributed-text-services.github.io/specifications/versions/1.0rc1/).\n1-alpha   = the 1-alpha specification (https://distributed-text-services.github.io/specifications/versions/1-alpha/). The unstable branch also self-reports as 1-alpha.\n1-draft   = a registry-local umbrella tag for implementations the upstream Known Corpora list labels as \"1.0 Draft\" (https://dtsapi.org/specifications/#known-corpora-accessible-via-the-dts-api). The only published draft directory in the specifications repository is 1-draft2; the dtsVersion field itself was introduced at 1-alpha, so 1-draft-era responses do not advertise a version. Use 1-draft when prose evidence labels an instance as a 1.0 draft without pinning it to a specific draft number; use 1-draft2 (and add it to this enum) when there is positive evidence an instance targets that specific draft.\npre-alpha = a registry-local marker reserved for implementations with positive evidence of predating the draft series entirely.\nunknown   = the endpoint serves a valid DTS response but does not include a dtsVersion field, and we have no external evidence pinning it to a specific spec version.\n\n1.0, 1.0rc1, and 1-alpha are exact literals taken from the DTS specification. 1-draft, pre-alpha, and unknown are registry-local conventions and never appear in DTS responses. The canonical list of published versions and their dtsVersion strings is maintained in the specifications repository:\n  - https://dtsapi.org/  (links to every published version)\n  - https://github.com/distributed-text-services/specifications/tree/main/versions  (one directory per version; each version's README contains JSON examples whose dtsVersion field is the canonical literal)"
+        },
+        "status": {
+          "description": "Operational status of the API instance (locally-defined term).",
+          "type": "string",
+          "enum": ["production", "development", "demo", "experimental", "deprecated"],
+          "$comment": "production    = a stable, actively maintained service intended for real-world use.\ndevelopment   = a service intended for production but currently incomplete or pre-release. Distinct from experimental (which is research-oriented) in that the maintainers' goal is a production-grade service.\ndemo          = a publicly accessible demonstration; data and availability may be unstable.\nexperimental  = a research-oriented instance with no production-grade aspirations; uptime and conformance are not guaranteed.\ndeprecated    = a previously listed instance that is no longer maintained or recommended."
+        },
+        "endpointURL": {
+          "type": "string",
+          "format": "iri",
+          "description": "Runtime URL of the DTS Entry Endpoint (resolves to dcat:endpointURL). Typically equal to @id, but kept distinct so that a service that moves can preserve its logical identifier."
+        },
+        "contactPoint": {
+          "type": "array",
+          "description": "Contact persons or organizations for this API instance (resolves to dcat:contactPoint).",
+          "items": { "$ref": "#/$defs/ContactPoint" }
+        }
+      },
+      "additionalProperties": true
+    },
+    "ContactPoint": {
+      "type": "object",
+      "description": "A contact for a DTS API instance, modelled as a vCard Kind (vcard:Individual or vcard:Organization).",
+      "required": ["@type", "fullName"],
+      "properties": {
+        "@type": {
+          "description": "MUST be \"Individual\" (vcard:Individual) for a person, or \"Organization\" (vcard:Organization) for an institution.",
+          "type": "string",
+          "enum": ["Individual", "Organization"]
+        },
+        "fullName": {
+          "type": "string",
+          "description": "Formatted name of the contact (resolves to vcard:fn)."
+        },
+        "email": {
+          "type": "string",
+          "pattern": "^mailto:",
+          "description": "Email address as a mailto: IRI (resolves to vcard:hasEmail)."
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}

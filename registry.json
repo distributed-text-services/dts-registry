@@ -1,1 +1,431 @@
+{
+  "@context": [
+    "https://dtsapi.org/context/v1.0.json",
+    {
+      "@vocab": "https://distributed-text-services.github.io/dts-registry/ns#",
+      "dcat": "http://www.w3.org/ns/dcat#",
+      "vcard": "http://www.w3.org/2006/vcard/ns#",
 
+      "Catalog": "dcat:Catalog",
+      "DataService": "dcat:DataService",
+      "Individual": "vcard:Individual",
+      "Organization": "vcard:Organization",
+
+      "entries": {
+        "@id": "dcat:service",
+        "@container": "@set"
+      },
+      "endpointURL": {
+        "@id": "dcat:endpointURL",
+        "@type": "@id"
+      },
+      "contactPoint": {
+        "@id": "dcat:contactPoint",
+        "@container": "@set"
+      },
+      "fullName": "vcard:fn",
+      "email": {
+        "@id": "vcard:hasEmail",
+        "@type": "@id"
+      },
+      "status": { "@type": "@vocab" }
+    }
+  ],
+
+  "@id": "https://distributed-text-services.github.io/dts-registry/",
+  "@type": "Catalog",
+  "title": "DTS Registry",
+  "description": "A registry of API instances that implement the Distributed Text Services (DTS) specification. Each entry identifies the Entry Endpoint of a DTS implementation along with metadata about its specification version, operational status, and contact points.",
+
+  "entries": [
+    {
+      "@id": "http://texts.alpheios.net/api/dts",
+      "@type": "DataService",
+      "title": "Alpheios Texts",
+      "description": "A small collection of Latin and Greek texts aligned with linguistic annotations for learning ancient languages. Uses the MyCapytain/Nautilus libraries. Labelled \"1.0 Draft\" in the upstream Known Corpora list (https://dtsapi.org/specifications/#known-corpora-accessible-via-the-dts-api).",
+      "dtsVersion": "1-draft",
+      "status": "experimental",
+      "endpointURL": "http://texts.alpheios.net/api/dts",
+      "contactPoint": [
+        {
+          "@type": "Individual",
+          "fullName": "Bridget Almas",
+          "email": "mailto:Bridget.Almas@tufts.edu"
+        }
+      ]
+    },
+    {
+      "@id": "https://betamasaheft.eu/api/dts",
+      "@type": "DataService",
+      "title": "Beta maṣāḥǝft",
+      "description": "Collection of written artefacts from the highlands of Ethiopia and Eritrea mainly in Gǝʿǝz (Classical Ethiopic), including transcriptions of manuscripts and editions of textual units. The endpoint serves a valid EntryPoint response (application/ld+json) but does not advertise a dtsVersion field; labelled \"1.0 Draft\" in the upstream Known Corpora list (https://dtsapi.org/specifications/#known-corpora-accessible-via-the-dts-api).",
+      "dtsVersion": "1-draft",
+      "status": "production",
+      "endpointURL": "https://betamasaheft.eu/api/dts",
+      "contactPoint": [
+        {
+          "@type": "Individual",
+          "fullName": "Pietro Liuzzo",
+          "email": "mailto:pietro.liuzzo@uni-hamburg.de"
+        }
+      ]
+    },
+    {
+      "@id": "https://edh-www.adw.uni-heidelberg.de/api/dts/",
+      "@type": "DataService",
+      "title": "Epigraphische Datenbank Heidelberg",
+      "description": "A corpus of approximately 80,000 short texts from the Latin epigraphic databases. Note: as of probing the endpoint serves a TLS certificate whose chain does not validate in default curl trust stores; the response itself is well-formed (no dtsVersion field, relative @context, pluralized collections/documents paths). Labelled \"1.0 Draft\" in the upstream Known Corpora list (https://dtsapi.org/specifications/#known-corpora-accessible-via-the-dts-api).",
+      "dtsVersion": "1-draft",
+      "status": "development",
+      "endpointURL": "https://edh-www.adw.uni-heidelberg.de/api/dts/",
+      "contactPoint": [
+        {
+          "@type": "Individual",
+          "fullName": "Frank Grieshaber",
+          "email": "mailto:frank.grieshaber@zaw.uni-heidelberg.de"
+        }
+      ]
+    },
+    {
+      "@id": "https://teipublisher.com/exist/apps/vangogh/api/dts",
+      "@type": "DataService",
+      "title": "Van Gogh Letters (TEIPublisher demo)",
+      "description": "The endpoint currently returns HTTP 404 and may have been retired. dtsVersion is the last-known value from the upstream DTS corpus list and has not been verified by curl.",
+      "dtsVersion": "unknown",
+      "status": "deprecated",
+      "endpointURL": "https://teipublisher.com/exist/apps/vangogh/api/dts",
+      "contactPoint": [
+        {
+          "@type": "Organization",
+          "fullName": "eXistSolutions",
+          "email": "mailto:mail@existsolutions.com"
+        }
+      ]
+    },
+    {
+      "@id": "https://www.briefedition.alfred-escher.ch/exist/apps/escher/api/dts/",
+      "@type": "DataService",
+      "title": "Alfred Escher-Briefedition",
+      "dtsVersion": "unknown",
+      "status": "production",
+      "endpointURL": "https://www.briefedition.alfred-escher.ch/exist/apps/escher/api/dts/",
+      "contactPoint": [
+        {
+          "@type": "Organization",
+          "fullName": "Staatsarchiv | Kanton Zürich",
+          "email": "mailto:staatsarchivzh@ji.zh.ch"
+        }
+      ]
+    },
+    {
+      "@id": "https://dev.dracor.org/api/v1/dts",
+      "@type": "DataService",
+      "title": "DraCor",
+      "description": "DraCor (Drama Corpora Project) — a programmable, multilingual corpus of dramatic texts.",
+      "dtsVersion": "1.0rc1",
+      "status": "production",
+      "endpointURL": "https://dev.dracor.org/api/v1/dts"
+    },
+    {
+      "@id": "https://dots.chartes.psl.eu/demo/api/dts/",
+      "@type": "DataService",
+      "title": "École Nationale des Chartes (DoTS)",
+      "description": "A small collection of contemporaneous and medieval French literature. The contemporaneous texts are lightly marked up, and the medieval texts are finely annotated. Served by DoTS, the BaseX-based DTS implementation from Biblissima+ and the École nationale des chartes; this endpoint is the successor to the earlier demo at dev.chartes.psl.eu.",
+      "dtsVersion": "1-alpha",
+      "status": "production",
+      "endpointURL": "https://dots.chartes.psl.eu/demo/api/dts/",
+      "contactPoint": [
+        {
+          "@type": "Individual",
+          "fullName": "Thibault Clérice",
+          "email": "mailto:thibault.clerice@chartes.psl.eu"
+        }
+      ]
+    },
+    {
+      "@id": "https://dts.perseids.org/",
+      "@type": "DataService",
+      "title": "Perseids",
+      "description": "Serves all textual resources available from Perseus within the Ancient Greek and Latin corpora, as well as some resources in Hebrew and Farsi. Labelled \"1.0 Draft\" in the upstream Known Corpora list (https://dtsapi.org/specifications/#known-corpora-accessible-via-the-dts-api).",
+      "dtsVersion": "1-draft",
+      "status": "experimental",
+      "endpointURL": "https://dts.perseids.org/"
+    },
+    {
+      "@id": "https://urncts.eu/textservice/ancJewLit/dts/",
+      "@type": "DataService",
+      "title": "Ancient Jewish Literature (TSI)",
+      "description": "Classical Jewish sources in Hebrew and Aramaic, sourced from hlapin/ancJewLitCTS. Hosted by Jochen Tiepmar's Text Service Infrastructure (TSI, https://urncts.eu/) under the urn:cts:ancJewLit namespace. The TSI implementation is a CTS+DTS service whose DTS endpoints self-report dtsVersion 1.0.",
+      "dtsVersion": "1.0",
+      "status": "production",
+      "endpointURL": "https://urncts.eu/textservice/ancJewLit/dts/",
+      "contactPoint": [
+        {
+          "@type": "Individual",
+          "fullName": "Jochen Tiepmar",
+          "email": "mailto:tiepilab@gmx.de"
+        }
+      ]
+    },
+    {
+      "@id": "https://urncts.eu/textservice/dhd/dts/",
+      "@type": "DataService",
+      "title": "DHd Conference Abstracts (TSI)",
+      "description": "Abstracts of the Digital Humanities im deutschsprachigen Raum (DHd) conference, sourced from the DHd-Verband. Hosted by Jochen Tiepmar's Text Service Infrastructure (TSI, https://urncts.eu/) under the urn:cts:dhd namespace.",
+      "dtsVersion": "1.0",
+      "status": "production",
+      "endpointURL": "https://urncts.eu/textservice/dhd/dts/",
+      "contactPoint": [
+        {
+          "@type": "Individual",
+          "fullName": "Jochen Tiepmar",
+          "email": "mailto:tiepilab@gmx.de"
+        }
+      ]
+    },
+    {
+      "@id": "https://tsi.daty.info/dts/",
+      "@type": "DataService",
+      "title": "Lower Sorbian Text Corpus (TSI)",
+      "description": "A Lower Sorbian text corpus (with some Upper Sorbian and German) operated by the Serbski Institute. Hosted at tsi.daty.info as part of Jochen Tiepmar's Text Service Infrastructure (TSI, https://urncts.eu/) under the urn:cts:dsb namespace. Marked \"WIP, URNs not persistent\" in the TSI public data instances table.",
+      "dtsVersion": "1.0",
+      "status": "development",
+      "endpointURL": "https://tsi.daty.info/dts/",
+      "contactPoint": [
+        {
+          "@type": "Individual",
+          "fullName": "Jochen Tiepmar",
+          "email": "mailto:tiepilab@gmx.de"
+        },
+        {
+          "@type": "Organization",
+          "fullName": "Serbski Institute"
+        }
+      ]
+    },
+    {
+      "@id": "https://urncts.eu/textservice/edh/dts/",
+      "@type": "DataService",
+      "title": "Epigraphic Database Heidelberg (TSI mirror)",
+      "description": "Texts of Latin and bilingual Latin-Greek inscriptions of the Roman Empire from the Epigraphic Database Heidelberg, served via Jochen Tiepmar's Text Service Infrastructure (TSI, https://urncts.eu/) under the urn:cts:edh namespace. Distinct from the original Heidelberg-hosted endpoint at edh-www.adw.uni-heidelberg.de.",
+      "dtsVersion": "1.0",
+      "status": "production",
+      "endpointURL": "https://urncts.eu/textservice/edh/dts/",
+      "contactPoint": [
+        {
+          "@type": "Individual",
+          "fullName": "Jochen Tiepmar",
+          "email": "mailto:tiepilab@gmx.de"
+        }
+      ]
+    },
+    {
+      "@id": "https://urncts.eu/textservice/folgershakespeare/dts/",
+      "@type": "DataService",
+      "title": "Folger Shakespeare (TSI)",
+      "description": "All of Shakespeare's works as published by the Folger Shakespeare Library. Hosted by Jochen Tiepmar's Text Service Infrastructure (TSI, https://urncts.eu/) under the urn:cts:folgershakespeare namespace.",
+      "dtsVersion": "1.0",
+      "status": "production",
+      "endpointURL": "https://urncts.eu/textservice/folgershakespeare/dts/",
+      "contactPoint": [
+        {
+          "@type": "Individual",
+          "fullName": "Jochen Tiepmar",
+          "email": "mailto:tiepilab@gmx.de"
+        }
+      ]
+    },
+    {
+      "@id": "https://urncts.eu/textservice/gps4/dts/",
+      "@type": "DataService",
+      "title": "German Political Speeches (TSI)",
+      "description": "German Political Speeches corpus compiled by Adrien Barbaresi (≈6,685 documents). Hosted by Jochen Tiepmar's Text Service Infrastructure (TSI, https://urncts.eu/) under the urn:cts:gps4 namespace.",
+      "dtsVersion": "1.0",
+      "status": "production",
+      "endpointURL": "https://urncts.eu/textservice/gps4/dts/",
+      "contactPoint": [
+        {
+          "@type": "Individual",
+          "fullName": "Jochen Tiepmar",
+          "email": "mailto:tiepilab@gmx.de"
+        }
+      ]
+    },
+    {
+      "@id": "https://urncts.eu/textservice/gwtc/dts/",
+      "@type": "DataService",
+      "title": "Game Walkthrough Corpus (TSI)",
+      "description": "Game Walkthrough Corpus reduced to ≈8,616 Neoseeker walkthroughs. Hosted by Jochen Tiepmar's Text Service Infrastructure (TSI, https://urncts.eu/) under the urn:cts:gwtc namespace. Content is copyright-restricted; access to passages requires a TSI copyright token.",
+      "dtsVersion": "1.0",
+      "status": "production",
+      "endpointURL": "https://urncts.eu/textservice/gwtc/dts/",
+      "contactPoint": [
+        {
+          "@type": "Individual",
+          "fullName": "Jochen Tiepmar",
+          "email": "mailto:tiepilab@gmx.de"
+        }
+      ]
+    },
+    {
+      "@id": "https://urncts.eu/textservice/humboldtdigital/dts/",
+      "@type": "DataService",
+      "title": "Edition Humboldt Digital (TSI)",
+      "description": "Tagebücher, Briefe, Dokumente, Forschungsbeiträge, and Chronologieeinträge of Edition Humboldt Digital (v11.0.1). Hosted by Jochen Tiepmar's Text Service Infrastructure (TSI, https://urncts.eu/) under the urn:cts:humboldtdigital namespace; source data from TELOTA (BBAW).",
+      "dtsVersion": "1.0",
+      "status": "production",
+      "endpointURL": "https://urncts.eu/textservice/humboldtdigital/dts/",
+      "contactPoint": [
+        {
+          "@type": "Individual",
+          "fullName": "Jochen Tiepmar",
+          "email": "mailto:tiepilab@gmx.de"
+        }
+      ]
+    },
+    {
+      "@id": "https://urncts.eu/textservice/jeanpaulbriefe/dts/",
+      "@type": "DataService",
+      "title": "Jean Paul – Sämtliche Briefe digital (TSI)",
+      "description": "Digital edition of the complete letters of Jean Paul (https://www.jeanpaul-edition.de). Hosted by Jochen Tiepmar's Text Service Infrastructure (TSI, https://urncts.eu/) under the urn:cts:jeanpaulbriefe namespace; source data from TELOTA (BBAW).",
+      "dtsVersion": "1.0",
+      "status": "production",
+      "endpointURL": "https://urncts.eu/textservice/jeanpaulbriefe/dts/",
+      "contactPoint": [
+        {
+          "@type": "Individual",
+          "fullName": "Jochen Tiepmar",
+          "email": "mailto:tiepilab@gmx.de"
+        }
+      ]
+    },
+    {
+      "@id": "https://urncts.eu/textservice/kant/dts/",
+      "@type": "DataService",
+      "title": "Kants gesammelte Schriften (TSI)",
+      "description": "Kants gesammelte Schriften, Neuedition der Abteilung I (https://kant-digital.bbaw.de/). Hosted by Jochen Tiepmar's Text Service Infrastructure (TSI, https://urncts.eu/) under the urn:cts:kant namespace; source data from TELOTA (BBAW).",
+      "dtsVersion": "1.0",
+      "status": "production",
+      "endpointURL": "https://urncts.eu/textservice/kant/dts/",
+      "contactPoint": [
+        {
+          "@type": "Individual",
+          "fullName": "Jochen Tiepmar",
+          "email": "mailto:tiepilab@gmx.de"
+        }
+      ]
+    },
+    {
+      "@id": "https://urncts.eu/textservice/lebenswelten/dts/",
+      "@type": "DataService",
+      "title": "Lebenswelten der Familie Lehndorff (TSI)",
+      "description": "\"Lebenswelten, Erfahrungsräume, politische Horizonte (Familie Lehndorff 18.-20. Jhdt)\" and \"Neuzeitlich-bäuerlicher Lebenswelten (ostpreußische Gutsarchive)\". Hosted by Jochen Tiepmar's Text Service Infrastructure (TSI, https://urncts.eu/) under the urn:cts:lebenswelten namespace; source data from TELOTA (BBAW).",
+      "dtsVersion": "1.0",
+      "status": "production",
+      "endpointURL": "https://urncts.eu/textservice/lebenswelten/dts/",
+      "contactPoint": [
+        {
+          "@type": "Individual",
+          "fullName": "Jochen Tiepmar",
+          "email": "mailto:tiepilab@gmx.de"
+        }
+      ]
+    },
+    {
+      "@id": "https://urncts.eu/textservice/openarabicpe/dts/",
+      "@type": "DataService",
+      "title": "Open Arabic Periodical Editions (TSI)",
+      "description": "Open Arabic Periodical Editions (Muqtabas, Manar, Ustadh, Haqaiq, Lughat, Zuhur). Hosted by Jochen Tiepmar's Text Service Infrastructure (TSI, https://urncts.eu/) under the urn:cts:openarabicpe namespace.",
+      "dtsVersion": "1.0",
+      "status": "production",
+      "endpointURL": "https://urncts.eu/textservice/openarabicpe/dts/",
+      "contactPoint": [
+        {
+          "@type": "Individual",
+          "fullName": "Jochen Tiepmar",
+          "email": "mailto:tiepilab@gmx.de"
+        }
+      ]
+    },
+    {
+      "@id": "https://urncts.eu/textservice/pbc/dts/",
+      "@type": "DataService",
+      "title": "Parallel Bible Corpus (TSI)",
+      "description": "20 copyright-free parallel bible translations. Hosted by Jochen Tiepmar's Text Service Infrastructure (TSI, https://urncts.eu/) under the urn:cts:pbc namespace.",
+      "dtsVersion": "1.0",
+      "status": "production",
+      "endpointURL": "https://urncts.eu/textservice/pbc/dts/",
+      "contactPoint": [
+        {
+          "@type": "Individual",
+          "fullName": "Jochen Tiepmar",
+          "email": "mailto:tiepilab@gmx.de"
+        }
+      ]
+    },
+    {
+      "@id": "https://urncts.eu/textservice/pcp/dts/",
+      "@type": "DataService",
+      "title": "Princeton Charrette Project (TSI)",
+      "description": "Chrétien de Troyes's Le Chevalier de la Charrette (Lancelot, ca. 1180), from the Princeton Charrette Project. Hosted by Jochen Tiepmar's Text Service Infrastructure (TSI, https://urncts.eu/) under the urn:cts:pcp namespace.",
+      "dtsVersion": "1.0",
+      "status": "production",
+      "endpointURL": "https://urncts.eu/textservice/pcp/dts/",
+      "contactPoint": [
+        {
+          "@type": "Individual",
+          "fullName": "Jochen Tiepmar",
+          "email": "mailto:tiepilab@gmx.de"
+        }
+      ]
+    },
+    {
+      "@id": "https://urncts.eu/textservice/textgrid/dts/",
+      "@type": "DataService",
+      "title": "TextGrid Digital Library (TSI)",
+      "description": "Mirror of the TextGrid Digital Library (https://textgrid.de/). Hosted by Jochen Tiepmar's Text Service Infrastructure (TSI, https://urncts.eu/) under the urn:cts:textgrid namespace.",
+      "dtsVersion": "1.0",
+      "status": "production",
+      "endpointURL": "https://urncts.eu/textservice/textgrid/dts/",
+      "contactPoint": [
+        {
+          "@type": "Individual",
+          "fullName": "Jochen Tiepmar",
+          "email": "mailto:tiepilab@gmx.de"
+        }
+      ]
+    },
+    {
+      "@id": "https://urncts.eu/textservice/tgap/dts/",
+      "@type": "DataService",
+      "title": "Thomas Gray Archive Poems (TSI)",
+      "description": "Thomas Gray Archive Poems (https://www.thomasgray.org/). Hosted by Jochen Tiepmar's Text Service Infrastructure (TSI, https://urncts.eu/) under the urn:cts:tgap namespace.",
+      "dtsVersion": "1.0",
+      "status": "production",
+      "endpointURL": "https://urncts.eu/textservice/tgap/dts/",
+      "contactPoint": [
+        {
+          "@type": "Individual",
+          "fullName": "Jochen Tiepmar",
+          "email": "mailto:tiepilab@gmx.de"
+        }
+      ]
+    },
+    {
+      "@id": "https://urncts.eu/textservice/voth/dts/",
+      "@type": "DataService",
+      "title": "David Boder: Voices of the Holocaust (TSI)",
+      "description": "David Boder: Voices of the Holocaust (https://voices.library.iit.edu/david_boder). Hosted by Jochen Tiepmar's Text Service Infrastructure (TSI, https://urncts.eu/) under the urn:cts:voth namespace.",
+      "dtsVersion": "1.0",
+      "status": "production",
+      "endpointURL": "https://urncts.eu/textservice/voth/dts/",
+      "contactPoint": [
+        {
+          "@type": "Individual",
+          "fullName": "Jochen Tiepmar",
+          "email": "mailto:tiepilab@gmx.de"
+        }
+      ]
+    }
+  ]
+}
