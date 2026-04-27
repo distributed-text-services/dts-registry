@@ -22,8 +22,7 @@ dts-registry repository that you can freely edit. Then
 
 1. In your fork, **append a new object** to the `entries` array of
    [`registry.json`](./registry.json) using the structure above.
-2. Validate the file (see below). It MUST be valid JSON and SHOULD validate
-   against [`registry.schema.json`](./registry.schema.json).
+2. Validate the file (see below). 
 3. Open a pull request.
 
 The full shape of the entry objects is described below. Note that
